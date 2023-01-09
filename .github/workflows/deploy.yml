@@ -10,8 +10,10 @@ jobs:
   test:
     env:
       MONGODB_CLUSTER_ADDRESS: githubdev.cstn6dz.mongodb.net
-      MONGODB_USERNAME: githubactionuser
-      MONGODB_PASSWORD: basit@4321
+      # MONGODB_USERNAME: githubactionuser
+      # MONGODB_PASSWORD: basit@4321
+      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
     environment: testing
     runs-on: ubuntu-latest
@@ -19,7 +21,9 @@ jobs:
       - name: Get Code
         uses: actions/checkout@v3
       - name: Output information For Testing
-        run: echo "MONGODB_USERNAME:$PORT"
+        run: |
+          echo "MONGODB_USERNAME:$MONGODB_USERNAME"
+          echo "MONGODB_PASSWORD:$MONGODB_PASSWORD"
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
